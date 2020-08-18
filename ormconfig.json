@@ -2,9 +2,11 @@
     "type": "postgres",
     "host": "localhost",
     "port": 5432,
-    "username": "javielrezende",
+    "username": "postgres",
     "password": "",
-    "database": "angeloyt",
-    "entities": ["dist/**/*.entity{.ts,.js}"],
+    "database": "crud_nest_api",
+    "entities": [
+        "dist/**/*.entity{.ts,.js}"
+    ],
     "synchronize": true
 }
