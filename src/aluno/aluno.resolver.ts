@@ -32,4 +32,11 @@ export class AlunoResolver {
         const aluno = this.alunoService.updateAluno(id, data);
         return aluno;
     }
+    @Mutation(() => Boolean)
+    async deleteAluno(
+        @Args('id') id: string
+    ): Promise<boolean> {
+        const deleted = await this.alunoService.deleteAluno(id);
+        return deleted;
+    }
 }

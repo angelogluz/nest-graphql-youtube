@@ -46,5 +46,16 @@ export class AlunoService {
         return alunoUpdated;
     }
 
+    async deleteAluno(id: string): Promise<boolean> {
+        const aluno = await this.findAlunoById(id);
 
+        const alunoDeleted = await this.alunoRepository.delete(aluno);
+        
+        if(alunoDeleted) {
+            return true;
+        }
+
+        return false;
+
+    }
 }
