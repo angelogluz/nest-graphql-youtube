@@ -1,35 +1,50 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
-import { ClientsService } from './clients.service';
+import { Resolver, Query, Mutation, Args} from '@nestjs/graphql';
+
 import { Client } from './entities/client.entity';
+import { ClientsService } from './clients.service';
 import { CreateClientInput } from './dto/create-client.input';
 import { UpdateClientInput } from './dto/update-client.input';
 
 @Resolver(() => Client)
 export class ClientsResolver {
-  constructor(private readonly clientsService: ClientsService) {}
-
-  @Mutation(() => Client)
-  createClient(@Args('createClientInput') createClientInput: CreateClientInput) {
-    return this.clientsService.create(createClientInput);
-  }
+  constructor(private clientsService: ClientsService) {}
 
   @Query(() => [Client], { name: 'clients' })
-  findAll() {
-    return this.clientsService.findAll();
+  async clients() : Promise<Client[]> {
+    const clients = await this.clientsService.findAllClients()
+    return clients;
   }
 
   @Query(() => Client, { name: 'client' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.clientsService.findOne(id);
+  async client(
+    @Args('id') id: string
+  ): Promise<Client> {
+    const client = this.clientsService.findClientById(id);
+    return client;
   }
 
   @Mutation(() => Client)
-  updateClient(@Args('updateClientInput') updateClientInput: UpdateClientInput) {
-    return this.clientsService.update(updateClientInput.id, updateClientInput);
+  async createClient(
+    @Args('data') data: CreateClientInput
+  ): Promise<Client> {
+    const client = await this.clientsService.createClient(data);
+    return client;
   }
 
   @Mutation(() => Client)
-  removeClient(@Args('id', { type: () => Int }) id: number) {
-    return this.clientsService.remove(id);
+  async updateClient(
+    @Args('id') id: string,
+    @Args('data') data: UpdateClientInput
+  ): Promise<Client>{
+    const client = await this.clientsService.updateClient(id, data);
+    return client;
+  }
+
+  @Mutation(() => Boolean)
+  async deleteClient(
+    @Args('id', { type: () => String }) id: string
+  ):Promise<boolean> {
+    const deleted = await this.clientsService.deleteClient(id);
+    return deleted;
   }
 }
