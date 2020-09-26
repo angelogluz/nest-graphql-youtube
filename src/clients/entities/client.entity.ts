@@ -4,12 +4,11 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  DeleteDateColumn,
+  DeleteDateColumn, Entity
 } from 'typeorm';
 
 @ObjectType()
-// Dispensa @Entity() porque o gerador de CRUD
-// do nest já faz o mapeamento da entity em /clients/entities ?
+@Entity()
 export class Client {
   @PrimaryGeneratedColumn()
   @Field(() => ID)
