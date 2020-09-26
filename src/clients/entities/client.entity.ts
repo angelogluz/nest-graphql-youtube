@@ -8,6 +8,8 @@ import {
 } from 'typeorm';
 
 @ObjectType()
+// Dispensa @Entity() porque o gerador de CRUD
+// do nest já faz o mapeamento da entity em /clients/entities ?
 export class Client {
   @PrimaryGeneratedColumn()
   @Field(() => ID)
