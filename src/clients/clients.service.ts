@@ -42,7 +42,7 @@ export class ClientsService {
     return clientUpdated;
   }
 
-  async deleteClient(id: string) {
+  async deleteClient(id: string): Promise<boolean> {
     const client = await this.findClientById(id);
     const deleted = await this.clientRepository.delete(client);
     if (deleted) {
