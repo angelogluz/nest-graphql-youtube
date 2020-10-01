@@ -42,9 +42,9 @@ export class ClientsResolver {
 
   @Mutation(() => Boolean)
   async deleteClient(
-    @Args('id', { type: () => String }) id: string
-  ):Promise<boolean> {
-    const deleted = await this.clientsService.deleteClient(id);
-    return deleted;
+      @Args('id') id: string
+  ): Promise<boolean> {
+      const deleted = await this.clientsService.deleteClient(id);
+      return deleted;
   }
 }
