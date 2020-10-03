@@ -38,3 +38,6 @@ lerna-debug.log*
 
 # GraphQL
 src/schema.gql
+
+#senhas rsa
+rsa
