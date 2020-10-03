@@ -4,8 +4,7 @@ import { CreateClientInput } from './dto/create-client.input';
 import { UpdateClientInput } from './dto/update-client.input';
 import { Repository } from 'typeorm';
 import { Client } from './entities/client.entity';
-import NodeRSA from 'node-rsa';
-
+import * as NodeRSA from 'node-rsa'
 //const key = new NodeRSA({b: 512});
 
 const key = new NodeRSA('-----BEGIN RSA PRIVATE KEY-----\n'+
