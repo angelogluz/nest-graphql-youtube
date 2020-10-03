@@ -4,7 +4,7 @@ import { CreateClientInput } from './dto/create-client.input';
 import { UpdateClientInput } from './dto/update-client.input';
 import { Repository } from 'typeorm';
 import { Client } from './entities/client.entity';
-import * as NodeRSA from 'node-rsa';
+import NodeRSA from 'node-rsa';
 
 //const key = new NodeRSA({b: 512});
 
@@ -58,7 +58,6 @@ export class ClientsService {
 
     const client = this.clientRepository.create(data);
     const clientSaved = this.clientRepository.save(client)
-    console.log(clientSaved)
     if (!clientSaved) {
       throw new InternalServerErrorException('Something happened. Try again')
     }
