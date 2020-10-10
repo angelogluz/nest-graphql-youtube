@@ -51,7 +51,6 @@ export class ClientsService {
     return client;
   }
 
-<<<<<<< HEAD
   async createClient(data:CreateClientInput): Promise<Client>{
     const nameCrypted = key.encrypt(data.name, 'base64');
     const phoneCrypted = key.encrypt(data.phone, 'base64');
@@ -60,10 +59,6 @@ export class ClientsService {
     data.name = nameCrypted;
     data.phone = phoneCrypted;
     data.email = mailCrypted;
-
-=======
-  async createClient(data: CreateClientInput): Promise<Client> {
->>>>>>> 66f195a5b8e9a5aac1c5f364dc22660cf3ec8cc6
     const client = this.clientRepository.create(data);
     const clientSaved = this.clientRepository.save(client)
     if (!clientSaved) {
@@ -72,7 +67,6 @@ export class ClientsService {
     return clientSaved;
   }
 
-<<<<<<< HEAD
   async updateClient(id: string, data: UpdateClientInput):Promise<Client> {
     if(data.name){
       const nameCrypted = key.encrypt(data.name, 'base64');
@@ -87,9 +81,6 @@ export class ClientsService {
       data.email = mailCrypted;
     }
 
-=======
-  async updateClient(id: string, data: UpdateClientInput): Promise<Client> {
->>>>>>> 66f195a5b8e9a5aac1c5f364dc22660cf3ec8cc6
     const client = await this.findClientById(id);
     await this.clientRepository.update(client, { ...data });
     const clientUpdated = this.clientRepository.create({ ...client, ...data });
