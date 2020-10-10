@@ -90,7 +90,7 @@ export class ClientsService {
 
   async deleteClient(id: string): Promise<boolean> {
     const client = await this.findClientById(id);
-    const deleted = await this.clientRepository.delete(client);
+    const deleted = await this.clientRepository.softRemove(client);
     if (deleted) {
       return true;
     }

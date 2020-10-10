@@ -30,5 +30,5 @@ export class Client {
   UpdatedAt!: Date;
 
   @DeleteDateColumn({ name: 'deleted_at' })
-  DeletedAt!: Date;
+  DeletedAt?: Date;
 }
