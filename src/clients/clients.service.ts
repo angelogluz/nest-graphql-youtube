@@ -1,4 +1,8 @@
-import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateClientInput } from './dto/create-client.input';
 import { UpdateClientInput } from './dto/update-client.input';
@@ -22,7 +26,7 @@ const key = new NodeRSA('-----BEGIN RSA PRIVATE KEY-----\n'+
 export class ClientsService {
   constructor(
     @InjectRepository(Client)
-    private clientRepository: Repository<Client>
+    private clientRepository: Repository<Client>,
   ) {}
 
   async findAllClients(): Promise<Client[]> {
@@ -38,7 +42,7 @@ export class ClientsService {
   async findClientById(id: string): Promise<Client> {
     const client = await this.clientRepository.findOne(id);
     if (!client) {
-      throw new NotFoundException('Client not found')
+      throw new NotFoundException('Client not found');
     }
     
     client.name = key.decrypt(client.name, 'utf8');
@@ -47,6 +51,7 @@ export class ClientsService {
     return client;
   }
 
+<<<<<<< HEAD
   async createClient(data:CreateClientInput): Promise<Client>{
     const nameCrypted = key.encrypt(data.name, 'base64');
     const phoneCrypted = key.encrypt(data.phone, 'base64');
@@ -56,14 +61,18 @@ export class ClientsService {
     data.phone = phoneCrypted;
     data.email = mailCrypted;
 
+=======
+  async createClient(data: CreateClientInput): Promise<Client> {
+>>>>>>> 66f195a5b8e9a5aac1c5f364dc22660cf3ec8cc6
     const client = this.clientRepository.create(data);
     const clientSaved = this.clientRepository.save(client)
     if (!clientSaved) {
-      throw new InternalServerErrorException('Something happened. Try again')
+      throw new InternalServerErrorException('Something happened. Try again');
     }
     return clientSaved;
   }
 
+<<<<<<< HEAD
   async updateClient(id: string, data: UpdateClientInput):Promise<Client> {
     if(data.name){
       const nameCrypted = key.encrypt(data.name, 'base64');
@@ -78,9 +87,12 @@ export class ClientsService {
       data.email = mailCrypted;
     }
 
+=======
+  async updateClient(id: string, data: UpdateClientInput): Promise<Client> {
+>>>>>>> 66f195a5b8e9a5aac1c5f364dc22660cf3ec8cc6
     const client = await this.findClientById(id);
-    await this.clientRepository.update(client, {...data});
-    const clientUpdated = this.clientRepository.create({...client,...data})
+    await this.clientRepository.update(client, { ...data });
+    const clientUpdated = this.clientRepository.create({ ...client, ...data });
 
     return clientUpdated;
   }
@@ -89,8 +101,8 @@ export class ClientsService {
     const client = await this.findClientById(id);
     const deleted = await this.clientRepository.delete(client);
     if (deleted) {
-      return true
-    } 
+      return true;
+    }
     return false;
   }
 }
