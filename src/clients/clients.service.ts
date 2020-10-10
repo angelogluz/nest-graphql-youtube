@@ -10,7 +10,7 @@ export class ClientsService {
     constructor(
         @InjectRepository(Clients)
         private clientsRepository: Repository<Clients>
-    ) { }
+    ) {}
 
     async findAllClients(): Promise<Clients[]> {
         const clientes = await this.clientsRepository.find();
@@ -30,7 +30,7 @@ export class ClientsService {
         const clienteSaved = await this.clientsRepository.save(cliente);
 
         if (!clienteSaved) {
-            throw new InternalServerErrorException('Problema na Criação do Cliente');
+            throw new InternalServerErrorException('Problem to create a client. Try again');
         }
         return clienteSaved;
     }
