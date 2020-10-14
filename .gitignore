@@ -38,3 +38,5 @@ lerna-debug.log*
 
 # GraphQL
 src/schema.gql
+
+src/users/user.entity.ts
