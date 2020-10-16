@@ -11,8 +11,7 @@ import { Client } from './entities/client.entity';
 
 import * as NodeRSA from 'node-rsa';
 
-
-const key = new NodeRSA(process.env.CRYPT_KEY, 'pkcs8-public-pem' );
+const key = new NodeRSA(process.env.CRYPT_KEY);
 
 @Injectable()
 export class ClientsService {
