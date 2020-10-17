@@ -1,16 +1,17 @@
-import { ObjectType, Field, ID } from "@nestjs/graphql";
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { ObjectType, Field, ID } from '@nestjs/graphql';
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { encryptionTransformer } from '../utils/encryptionTransformer';
 
 @ObjectType()
 @Entity()
 export class User {
-    @PrimaryGeneratedColumn()
-    @Field(() => ID)
-    id: string;
+  @PrimaryGeneratedColumn()
+  @Field(() => ID)
+  id: string;
 
-    @Column()
-    name: string;
+  @Column({ transformer: encryptionTransformer })
+  name: string;
 
-    @Column()
-    email: string;
+  @Column({ transformer: encryptionTransformer })
+  email: string;
 }
