@@ -5,12 +5,13 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+
 @ObjectType()
 @Entity()
 export class User {
-    @PrimaryGeneratedColumn()
-    @Field(() => ID)
-    id: string;
+  @PrimaryGeneratedColumn('uuid')
+  @Field(() => ID)
+  id: string;
 
     @Column({
       transformer: MyEncryptionTransformerConfig
@@ -27,4 +28,5 @@ export class User {
     })
       password: string;
     }
+
 
