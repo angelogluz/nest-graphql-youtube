@@ -18,6 +18,7 @@ describe('ClientsService', () => {
     create: jest.fn(),
     update: jest.fn(),
     delete: jest.fn(),
+    softRemove: jest.fn(),
   };
 
   beforeAll(async () => {
@@ -40,6 +41,8 @@ describe('ClientsService', () => {
     mockRepository.delete.mockReset();
     mockRepository.findOne.mockReset();
     mockRepository.update.mockReset();
+    mockRepository.save.mockReset();
+    mockRepository.softRemove.mockReset();
   });
 
   it('should be defined', () => {
@@ -93,7 +96,7 @@ describe('ClientsService', () => {
       await service.createClient(client).catch(e => {
         expect(e).toBeInstanceOf(InternalServerErrorException);
         expect(e).toMatchObject({
-          message: 'Problem to create a client. Try again',
+          message: 'Something happened. Try again',
         });
       });
       expect(mockRepository.create).toBeCalledTimes(1);
@@ -130,26 +133,26 @@ describe('ClientsService', () => {
   describe('When delete Client', () => {
     it('Should delete a existing client', async () => {
       const client = TestUtilClient.giveAMeAValidClient();
-      mockRepository.delete.mockReturnValue(client);
+      mockRepository.softRemove.mockReturnValue(client);
       mockRepository.findOne.mockReturnValue(client);
 
       const deletedClient = await service.deleteClient('1');
 
       expect(deletedClient).toBe(true);
       expect(mockRepository.findOne).toBeCalledTimes(1);
-      expect(mockRepository.delete).toBeCalledTimes(1);
+      expect(mockRepository.softRemove).toBeCalledTimes(1);
     });
 
     it('Should not delete a inexisting client', async () => {
       const client = TestUtilClient.giveAMeAValidClient();
-      mockRepository.delete.mockReturnValue(null);
+      mockRepository.softRemove.mockReturnValue(null);
       mockRepository.findOne.mockReturnValue(client);
 
       const deletedClient = await service.deleteClient('9');
 
       expect(deletedClient).toBe(false);
       expect(mockRepository.findOne).toBeCalledTimes(1);
-      expect(mockRepository.delete).toBeCalledTimes(1);
+      expect(mockRepository.softRemove).toBeCalledTimes(1);
     });
   });
 });
