@@ -4,8 +4,11 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  DeleteDateColumn, Entity
+  DeleteDateColumn,
+  Entity,
 } from 'typeorm';
+
+import { encryptionTransformer } from '../../utils/encryptionTransformer';
 
 @ObjectType()
 @Entity()
@@ -14,13 +17,13 @@ export class Client {
   @Field(() => ID)
   id: string;
 
-  @Column()
+  @Column({ transformer: encryptionTransformer })
   name: string;
 
-  @Column()
+  @Column({ transformer: encryptionTransformer })
   email: string;
 
-  @Column()
+  @Column({ transformer: encryptionTransformer })
   phone: string;
 
   @CreateDateColumn({ name: 'created_at' })
